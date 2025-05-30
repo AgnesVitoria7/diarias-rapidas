@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Configurações</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #3b3fbc;
+    }
+    .config-container {
+      max-width: 500px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      margin-top: 15px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 25px;
+      width: 100%;
+      background-color: #3b3fbc;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2a2f9e;
+    }
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #3b3fbc;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Configurações</h2>
+  <div class="config-container">
+    <form id="configForm">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Digite uma nova senha" />
+
+      <label for="notificacoes">Notificações</label>
+      <select id="notificacoes" name="notificacoes">
+        <option value="todas">Receber todas as notificações</option>
+        <option value="importantes">Receber só notificações importantes</option>
+        <option value="nenhuma">Não receber notificações</option>
+      </select>
+
+      <button type="submit">Salvar Alterações</button>
+    </form>
+    <a href="Tela03.html" class="back-link">Voltar</a>
+  </div>
+
+  <script>
+  const usuarioAtual = JSON.parse(localStorage.getItem('usuarioAtualData') || '{}');
+
+  window.onload = () => {
+    if (usuarioAtual.nome) document.getElementById('nome').value = usuarioAtual.nome;
+    if (usuarioAtual.email) document.getElementById('email').value = usuarioAtual.email;
+    if (usuarioAtual.notificacoes) document.getElementById('notificacoes').value = usuarioAtual.notificacoes;
+  };
+
+  document.getElementById('configForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha').value.trim();
+    const notificacoes = document.getElementById('notificacoes').value;
+
+    if (!nome || !email) {
+      alert('Por favor, preencha os campos obrigatórios.');
+      return;
+    }
+
+    // Atualiza os dados do usuário atual
+    const dadosAtualizados = {
+      ...usuarioAtual,
+      nome,
+      email,
+      notificacoes
+    };
+    if (senha) {
+      dadosAtualizados.senha = senha;
+    }
+
+    // Atualiza localStorage do usuário atual
+    localStorage.setItem('usuarioAtualData', JSON.stringify(dadosAtualizados));
+
+    // Atualiza o usuário na lista geral de usuários
+    let usuarios = JSON.parse(localStorage.getItem('usuariosCadastrados') || '[]');
+    const index = usuarios.findIndex(u => u.email === usuarioAtual.email);
+    if (index !== -1) {
+      // Atualiza todos os dados, inclusive email (caso mude)
+      usuarios[index] = {
+        ...usuarios[index],
+        nome,
+        email,
+        notificacoes,
+        senha: senha ? senha : usuarios[index].senha
+      };
+
+      // Se o email foi alterado, precisamos garantir consistência
+      if (email !== usuarioAtual.email) {
+        localStorage.setItem('usuarioAtualData', JSON.stringify(usuarios[index]));
+      }
+
+      localStorage.setItem('usuariosCadastrados', JSON.stringify(usuarios));
+    }
+
+    alert('Configurações salvas com sucesso!');
+    window.location.href = "Tela03.html";
+  });
+</script>   
+
+</body>
+</html>

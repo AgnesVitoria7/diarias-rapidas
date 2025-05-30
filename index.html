@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Diárias Rápidas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2e32a8;
+      margin-bottom: 25px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 15px;
+      margin-bottom: 20px;
+      border: 1.8px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #3b3fbc;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #3b3fbc, #4c51ff);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #2e32a8, #3a3ee0);
+    }
+
+    .forgot-password, .signup-link {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #3b3fbc;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .forgot-password:hover,
+    .signup-link:hover {
+      color: #2e32a8;
+    }
+
+    .signup-link {
+      display: block;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Entrar no <br><strong>Diárias Rápidas</strong></h1>
+    <form id="loginForm" onsubmit="return validarLogin(event)">
+      <label for="usuario">Usuário</label>
+      <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required />
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required />
+
+      <button type="submit">Entrar</button>
+    </form>
+
+    <div class="forgot-password" onclick="alert('Recuperação de senha ainda não implementada 😅')">
+      Esqueci minha senha
+    </div>
+
+    <a class="signup-link" href="cadastro.html">Ainda não tem uma conta? Cadastre-se aqui</a>
+  </div>
+
+  <script>
+    function validarLogin(event) {
+      event.preventDefault();
+
+      const usuario = document.getElementById('usuario').value.trim();
+      const senha = document.getElementById('senha').value.trim();
+
+      // Pega a lista de usuários cadastrados do localStorage
+      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+      // Verifica se existe algum com mesmo nome de usuário e senha
+      const usuarioValido = usuarios.find(u => u.usuario === usuario && u.senha === senha);
+
+      if (usuarioValido) {
+        //alert(`Bem-vindo(a), ${usuarioValido.nome}!`);
+        window.location.href = "Tela01.html";
+      } else {
+        alert("Usuário ou senha incorretos!");
+      }
+      localStorage.setItem('usuarioLogado', usuario);
+    }
+  </script>
+</body>
+</html>

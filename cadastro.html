@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro - Diárias Rápidas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .cadastro-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2e32a8;
+      margin-bottom: 25px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 15px;
+      margin-bottom: 20px;
+      border: 1.8px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #3b3fbc;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #3b3fbc, #4c51ff);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #2e32a8, #3a3ee0);
+    }
+
+    .login-link {
+      margin-top: 15px;
+      display: block;
+      font-size: 14px;
+      color: #3b3fbc;
+      text-decoration: underline;
+    }
+
+    .login-link:hover {
+      color: #2e32a8;
+    }
+
+    @media (max-width: 480px) {
+      .cadastro-container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cadastro-container">
+    <h1>Crie sua conta<br><strong>Diárias Rápidas</strong></h1>
+    <form id="cadastroForm" onsubmit="return cadastrarUsuario(event)">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="email@exemplo.com" required />
+
+      <label for="telefone">Telefone</label>
+      <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required />
+
+      <label for="usuario">Usuário</label>
+      <input type="text" id="usuario" name="usuario" placeholder="Nome de usuário" required />
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required />
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <a class="login-link" href="login.html">Já tem uma conta? Faça login</a>
+  </div>
+
+  <script>
+  function cadastrarUsuario(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefone = document.getElementById('telefone').value.trim();
+    const usuario = document.getElementById('usuario').value.trim();
+    const senha = document.getElementById('senha').value.trim();
+
+    if (!nome || !email || !telefone || !usuario || !senha) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    // Pega usuários existentes ou inicia um array vazio
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    // Verifica se já existe o nome de usuário
+    const usuarioExiste = usuarios.some(u => u.usuario === usuario);
+
+    if (usuarioExiste) {
+      alert("Esse nome de usuário já está em uso. Por favor, escolha outro.");
+      return;
+    }
+
+    // Adiciona novo usuário ao array
+    const novoUsuario = { nome, email, telefone, usuario, senha };
+    usuarios.push(novoUsuario);
+
+    // Salva no localStorage
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+    alert(`Cadastro realizado com sucesso!\nBem-vindo(a), ${nome}!`);
+    window.location.href = 'Login.html'; // ou 'login.html'
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diárias Rápidas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #2e32a8;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    a.button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #3b3fbc, #4c51ff);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    a.button:hover {
+      background: linear-gradient(to right, #2e32a8, #3a3ee0);
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bem-vindo ao <br><strong>Diárias Rápidas</strong></h1>
+    <p>Encontre ou ofereça serviços como pintura, jardinagem, limpeza e muito mais!</p>
+    <a class="button" href="Tela02.html">🔍 Procurar Profissionais</a>
+    <a class="button" href="Tela02.html">💼 Oferecer Meus Serviços</a>
+    <a class="button" href="Tela03.html">Pular</a>
+  </div>
+</body>
+</html>

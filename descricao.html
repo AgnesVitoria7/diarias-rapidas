@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Descrição Completa</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #3b3fbc;
+      text-align: center;
+    }
+
+    p {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #3b3fbc;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Descrição do Serviço</h2>
+    <p id="descricao"></p>
+    <a href="javascript:history.back()">← Voltar</a>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const index = urlParams.get('index');
+    const servicos = JSON.parse(localStorage.getItem('servicos') || '[]');
+
+    if (index !== null && servicos[index]) {
+      document.getElementById('descricao').textContent = servicos[index].descricao;
+    } else {
+      document.getElementById('descricao').textContent = "Serviço não encontrado.";
+    }
+  </script>
+</body>
+</html>
